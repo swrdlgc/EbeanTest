@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.avaje.ebean.EbeanServer;
@@ -27,6 +28,9 @@ public class AccountingModelTest {
         config.setDefaultServer(true);
         config.setRegister(true);
         config.setNamingConvention(new MatchingNamingConvention());
+        List<Class<?>> classes = new ArrayList<Class<?>>();
+        classes.add(AccountingModel.class);
+        config.setClasses(classes);
         
         EbeanServer server = EbeanServerFactory.create(config);
         System.err.println(server.createSqlQuery("show tables").findList().size());
@@ -42,10 +46,11 @@ public class AccountingModelTest {
         //am.save();
         
         am = list.get(0);
-        am.setRemark("xxxxx");
+        am.setRemark("xxx");
         am.lastUpdateTime = (int) (System.currentTimeMillis() / 1000);
         //am.update("default");
-        server.update(am);
+        //server.update(am);
+        am.update();
         
         am = list.get(2);
         //am.delete();
